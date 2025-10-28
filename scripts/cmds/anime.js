@@ -17,7 +17,7 @@ module.exports = {
     async function fetchRandomAnime() {
       try {
         const res = await axios.get(`${API_URL}/random`);
-        return res.data; 
+        return res.data?.data?.download_link; // সঠিকভাবে ভিডিও URL পাওয়া যাবে
       } catch (err) {
         console.error("Error fetching anime video:", err.message);
         return null;
