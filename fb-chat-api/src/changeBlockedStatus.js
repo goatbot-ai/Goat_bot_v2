@@ -4,13 +4,14 @@ const utils = require("../utils");
 // @NethWs3Dev
 
 module.exports = function (defaultFuncs, api, ctx) {
-  return function forwardAttachment(attachmentID, userOrUsers, callback) {
+  return function changeBlockedStatus(userID, block, callback) {
     let resolveFunc = function () {};
     let rejectFunc = function () {};
     const returnPromise = new Promise(function (resolve, reject) {
       resolveFunc = resolve;
       rejectFunc = reject;
     });
+
     if (!callback) {
       callback = function (err) {
         if (err) {
@@ -20,29 +21,18 @@ module.exports = function (defaultFuncs, api, ctx) {
       };
     }
 
-    const form = {
-      attachment_id: attachmentID,
-    };
-
-    if (utils.getType(userOrUsers) !== "Array") {
-      userOrUsers = [userOrUsers];
-    }
-
-    const timestamp = Math.floor(Date.now() / 1000);
-
-    for (let i = 0; i < userOrUsers.length; i++) {
-      //That's good, the key of the array is really timestmap in seconds + index
-      //Probably time when the attachment will be sent?
-      form["recipient_map[" + (timestamp + i) + "]"] = userOrUsers[i];
-    }
-
     defaultFuncs
       .post(
-        "https://www.facebook.com/mercury/attachments/forward/",
+        `https://www.facebook.com/messaging/${
+          block ? "" : "un"
+        }block_messages/`,
         ctx.jar,
-        form,
+        {
+          fbid: userID,
+        },
       )
-      .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
+      .then(utils.saveCookies(ctx.jar))
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function (resData) {
         if (resData.error) {
           throw resData;
@@ -51,10 +41,9 @@ module.exports = function (defaultFuncs, api, ctx) {
         return callback();
       })
       .catch(function (err) {
-        utils.error("forwardAttachment", err);
+        utils.error("changeBlockedStatus", err);
         return callback(err);
       });
-
     return returnPromise;
   };
 };
