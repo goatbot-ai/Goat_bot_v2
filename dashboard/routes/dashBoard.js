@@ -13,7 +13,7 @@ module.exports = function ({ isAuthenticated, isVeryfiUserIDFacebook, checkHasAn
 			let authConfigDashboard = true;
 			const warnings = [];
 			if (!checkAuthConfigDashboardOfThread(threadData, req.user.facebookUserID)) {
-				warnings.push({ msg: "[!] Only chat group admins or authorized members can edit dashboard" });
+				warnings.push({ msg: "[!] Chỉ quản trị viên của nhóm chat hoặc những thành viên được cho phép mới có thể chỉnh sửa dashboard" });
 				authConfigDashboard = false;
 			}
 			delete req.threadData;
