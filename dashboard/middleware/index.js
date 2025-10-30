@@ -14,7 +14,7 @@ module.exports = function (checkAuthConfigDashboardOfThread) {
 				return res.status(401).send({
 					status: "error",
 					error: "PERMISSION_DENIED",
-					message: "please try again later"
+					message: "Bạn chưa đăng nhập"
 				});
 
 			req.flash("errors", { msg: "You must be logged in" });
@@ -29,7 +29,7 @@ module.exports = function (checkAuthConfigDashboardOfThread) {
 				return res.status(401).send({
 					status: "error",
 					error: "PERMISSION_DENIED",
-					message: "Baigan 🦆💨"
+					message: "Đã xảy ra lỗi"
 				});
 
 			res.redirect("/");
@@ -43,7 +43,7 @@ module.exports = function (checkAuthConfigDashboardOfThread) {
 				return res.status(401).send({
 					status: "error",
 					error: "PERMISSION_DENIED",
-					message: "You are not authenticated  Facebook id👋🦆"
+					message: "Bạn chưa xác thực id Facebook"
 				});
 
 			req.flash("errors", { msg: "Bạn cần phải xác thực id facebook trước khi thực hiện hành động này" });
@@ -58,7 +58,7 @@ module.exports = function (checkAuthConfigDashboardOfThread) {
 				return res.status(401).send({
 					status: "error",
 					error: "PERMISSION_DENIED",
-					message: "An error occurred, please try again"
+					message: "Đã xảy ra lỗi, vui lòng thử lại"
 				});
 
 			res.redirect("/register");
@@ -87,10 +87,10 @@ module.exports = function (checkAuthConfigDashboardOfThread) {
 					return res.status(401).send({
 						status: "error",
 						error: "PERMISSION_DENIED",
-						message: "This group was not found."
+						message: "Bạn không phải là thành viên nhóm này"
 					});
 
-				req.flash("errors", { msg: "You are not in this chat group" });
+				req.flash("errors", { msg: "Bạn không ở trong nhóm chat này" });
 				return res.redirect("/dashboard");
 			}
 			req.threadData = threadData;
@@ -122,7 +122,7 @@ module.exports = function (checkAuthConfigDashboardOfThread) {
 					return res.status(401).send({
 						status: "error",
 						error: "PERMISSION_DENIED",
-						message: "you are not admin for this bot"
+						message: "Bạn không phải là admin của bot"
 					});
 
 				req.flash("errors", { msg: "Bạn không phải là admin của bot" });
