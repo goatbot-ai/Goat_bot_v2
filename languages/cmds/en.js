@@ -353,6 +353,7 @@ module.exports = {
 			roleText0: "0 (All users)",
 			roleText1: "1 (Group administrators)",
 			roleText2: "2 (Admin bot)",
+			roleText3: "3 (Developer bot)",
 			roleText0setRole: "0 (set role, all users)",
 			roleText1setRole: "1 (set role, group administrators)",
 			pageNotFound: "Page %1 does not exist"
